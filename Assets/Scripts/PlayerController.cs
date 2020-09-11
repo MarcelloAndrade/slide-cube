@@ -40,16 +40,16 @@ public class PlayerController : MonoBehaviour {
             float moveX = 0f;
             if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
                 direction = Axis.Y;
-                moveY = +11f;
+                moveY = +1f;
             } else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) {
                 direction = Axis.Y;
-                moveY = -11f;
+                moveY = -1f;
             } else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) {
                 direction = Axis.X;
-                moveX = +11f;
+                moveX = +1f;
             } else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
                 direction = Axis.X;
-                moveX = -11f;
+                moveX = -1f;
             }
 
             if (direction != Axis.None) {

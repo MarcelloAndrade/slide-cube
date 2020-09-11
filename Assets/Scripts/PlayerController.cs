@@ -9,22 +9,32 @@ public class PlayerController : MonoBehaviour {
     public LayerMask squareLayer;
     public LayerMask checkPointLayer;
 
-    //private Animator anim;
-    private Player player;
-    private AudioSource audioSource;
+    public Sprite spriteBlue;
+    public Sprite spriteGreen;
+    public Sprite spritePink;
+    public Sprite spriteOrange;
 
-    private AudioClip clipMerge;
-    private AudioClip clipBlock;
+    private Animator anim;
+    private SpriteRenderer playerSpriteRenderer;
+    private AudioSource audioSource;
+    
+    private AudioClip clipChange;
+    private AudioClip clipBlock;    
+
+    private Player player;
 
     private void Awake() {
-        //anim = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
+        playerSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();        
+
         SetPlayerAttributes(gameObject.tag);
-        player = new Player();
 
+        // Sounds
         audioSource = GetComponent<AudioSource>();
-        clipMerge = Resources.Load<AudioClip>("bubble_03");
-        clipBlock = Resources.Load<AudioClip>("bubble_04");
+        clipChange = Resources.Load<AudioClip>("change");
+        clipBlock = Resources.Load<AudioClip>("block");        
 
+        player = new Player();        
     }
 
     private void Start() {
@@ -52,7 +62,7 @@ public class PlayerController : MonoBehaviour {
                 moveX = -1f;
             }
 
-            if (direction != Axis.None) {
+            if (direction != Axis.None) {                
                 while (GetNextPositionToMove(direction, moveY, moveX)) {
                 }
             }
@@ -89,15 +99,14 @@ public class PlayerController : MonoBehaviour {
                 audioSource.PlayOneShot(clipBlock);
                 return false;
             } else if (square != null && !square.gameObject.CompareTag(gameObject.tag)) {
-                audioSource.PlayOneShot(clipMerge);
+                audioSource.PlayOneShot(clipChange);
                 moveToPoint.position = moveTo;
                 return false;
             }
 
             moveToPoint.position = moveTo;
             return true;
-        }
-
+        }        
         return false;
     }
 
@@ -114,6 +123,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void ChangePositionBetweenPlayerAndSquare(Collider2D collider) {
+        collider.GetComponent<Animator>().SetTrigger("square-transforme");        
         if (player.LastDirectionMovement == Axis.X) {
             collider.transform.position += new Vector3(player.LastValueMovement * -1, 0f, 0f);
         } else if (player.LastDirectionMovement == Axis.Y) {
@@ -122,24 +132,36 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void SetPlayerAttributes(string tagName) {
+        float intensity = 0.036f;
+        
         if (tagName.Equals("Blue")) {
-            //anim.SetInteger("player-transforme", 0);
+            anim.SetTrigger("player-transforme");
+            playerSpriteRenderer.material.SetColor("_Color", new Color(0 * intensity, 92 * intensity, 191 * intensity, 0)); // blue color                        
+            playerSpriteRenderer.sprite = spriteBlue;
             gameObject.tag = "Blue";
 
         } else if (tagName.Equals("Green")) {
-            //anim.SetInteger("player-transforme", 1);
+            anim.SetTrigger("player-transforme");
+            playerSpriteRenderer.material.SetColor("_Color", new Color(18 * intensity, 191 * intensity, 0, 0)); // green color
+            playerSpriteRenderer.sprite = spriteGreen;
             gameObject.tag = "Green";
 
         } else if (tagName.Equals("Orange")) {
-            //anim.SetInteger("player-transforme", 2);
+            anim.SetTrigger("player-transforme");
+            playerSpriteRenderer.material.SetColor("_Color", new Color(191 * intensity, 51 * intensity, 0, 0)); // orange color
+            playerSpriteRenderer.sprite = spriteOrange;            
             gameObject.tag = "Orange";
 
         } else if (tagName.Equals("Pink")) {
-            //anim.SetInteger("player-transforme", 3);
+            anim.SetTrigger("player-transforme");
+            playerSpriteRenderer.material.SetColor("_Color", new Color(191 * intensity, 0, 92 * intensity, 0)); // pink color
+            playerSpriteRenderer.sprite = spritePink;            
             gameObject.tag = "Pink";
 
         } else {
-            //anim.SetInteger("player-transforme", 0);
+            anim.SetTrigger("player-transforme");
+            playerSpriteRenderer.material.SetColor("_Color", new Color(0 * intensity, 92 * intensity, 191 * intensity, 0)); // blue color                        
+            playerSpriteRenderer.sprite = spriteBlue;
             gameObject.tag = "Blue";
         }
     }

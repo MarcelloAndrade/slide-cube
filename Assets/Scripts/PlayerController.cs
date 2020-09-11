@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour {
     private void Update() {
         transform.position = Vector3.MoveTowards(transform.position, moveToPoint.position, speed * Time.deltaTime);
 
-        if (Vector3.Distance(transform.position, moveToPoint.position) == 0) {
+        if (Vector3.Distance(transform.position, moveToPoint.position) < 0.3) {
             Axis direction = Axis.None;
             float moveY = 0f;
             float moveX = 0f;

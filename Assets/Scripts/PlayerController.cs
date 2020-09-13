@@ -19,7 +19,9 @@ public class PlayerController : MonoBehaviour {
     private AudioSource audioSource;
     
     private AudioClip clipChange;
-    private AudioClip clipBlock;    
+    private AudioClip clipBlock;
+    private AudioClip clipSuccess;
+    private AudioClip clipMovement;
 
     private Player player;
 
@@ -32,7 +34,9 @@ public class PlayerController : MonoBehaviour {
         // Sounds
         audioSource = GetComponent<AudioSource>();
         clipChange = Resources.Load<AudioClip>("change");
-        clipBlock = Resources.Load<AudioClip>("block");        
+        clipBlock = Resources.Load<AudioClip>("block");
+        clipSuccess = Resources.Load<AudioClip>("success");
+        clipMovement = Resources.Load<AudioClip>("movement");
 
         player = new Player();        
     }
@@ -90,6 +94,7 @@ public class PlayerController : MonoBehaviour {
                 moveToPoint.position = moveTo;
                 return false;
             } else if (checkPoint != null && !checkPoint.gameObject.CompareTag(gameObject.tag)) {
+                audioSource.PlayOneShot(clipBlock);
                 return false;
             }
 
@@ -106,13 +111,16 @@ public class PlayerController : MonoBehaviour {
 
             moveToPoint.position = moveTo;
             return true;
-        }        
+        } else {
+            audioSource.PlayOneShot(clipMovement);
+        }       
         return false;
     }
 
     private void OnTriggerEnter2D(Collider2D collider) {
         if (gameObject.CompareTag(collider.tag) && collider.gameObject.layer == 10) {
             Debug.Log("YOU WIN");
+            audioSource.PlayOneShot(clipSuccess);
             return;
         }
 

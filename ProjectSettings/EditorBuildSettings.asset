@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/PilotoScene.unity
+    guid: 351b3c53153fdd4459e7980718c5efab
   m_configObjects: {}

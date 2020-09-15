@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class TimerBar : MonoBehaviour {
 
+    public GameManager gameManager;
+
     public int timeToComplete;
     public Gradient gradient;
     public Image fill;
@@ -23,6 +25,8 @@ public class TimerBar : MonoBehaviour {
         if (slider.value > 0) {
             slider.value -= Time.deltaTime;
             fill.color = gradient.Evaluate(slider.normalizedValue);
+        } else if (slider.value <= 0) {
+            gameManager.EndGame();
         }
     }
 }

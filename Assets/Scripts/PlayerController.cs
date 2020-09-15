@@ -118,12 +118,6 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D collider) {
-        if (gameObject.CompareTag(collider.tag) && collider.gameObject.layer == 10) {
-            Debug.Log("YOU WIN");
-            audioSource.PlayOneShot(clipSuccess);
-            return;
-        }
-
         if (!gameObject.CompareTag(collider.tag) && collider.gameObject.layer == 9) {
             ChangePositionBetweenPlayerAndSquare(collider);
         }

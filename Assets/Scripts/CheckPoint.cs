@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CheckPoint : MonoBehaviour {
 
+    public GameManager gameManager;
+
     private Animator anim;
 
     void Start() {
@@ -24,6 +26,16 @@ public class CheckPoint : MonoBehaviour {
         } else {
             anim.SetTrigger("transforme-blue");
             gameObject.tag = "Blue";
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.CompareTag("Blue") ||
+            collision.CompareTag("Green") ||
+            collision.CompareTag("Orange") ||
+            collision.CompareTag("Pink")) {
+            gameManager.CompleteLevel();            
+            return;
         }
     }
 }

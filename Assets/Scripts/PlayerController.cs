@@ -16,13 +16,7 @@ public class PlayerController : MonoBehaviour {
 
     private Animator anim;
     private SpriteRenderer playerSpriteRenderer;
-    private AudioSource audioSource;
     
-    private AudioClip clipChange;
-    private AudioClip clipBlock;
-    private AudioClip clipSuccess;
-    private AudioClip clipMovement;
-
     private Player player;
 
     private void Awake() {
@@ -30,13 +24,6 @@ public class PlayerController : MonoBehaviour {
         playerSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();        
 
         SetPlayerAttributes(gameObject.tag);
-
-        // Sounds
-        audioSource = GetComponent<AudioSource>();
-        clipChange = Resources.Load<AudioClip>("change");
-        clipBlock = Resources.Load<AudioClip>("block");
-        clipSuccess = Resources.Load<AudioClip>("success");
-        clipMovement = Resources.Load<AudioClip>("movement");
 
         player = new Player();        
     }
@@ -94,17 +81,17 @@ public class PlayerController : MonoBehaviour {
                 moveToPoint.position = moveTo;
                 return false;
             } else if (checkPoint != null && !checkPoint.gameObject.CompareTag(gameObject.tag)) {
-                audioSource.PlayOneShot(clipBlock);
+                GameSounds.PlayerSound(GameSounds.Sound.PlayerBlock);
                 return false;
             }
 
             // Check colider with squareLayer
             Collider2D square = Physics2D.OverlapCircle(moveTo, 0.2f, squareLayer);
             if (square != null && square.gameObject.CompareTag(gameObject.tag)) {
-                audioSource.PlayOneShot(clipBlock);
+                GameSounds.PlayerSound(GameSounds.Sound.PlayerBlock);
                 return false;
             } else if (square != null && !square.gameObject.CompareTag(gameObject.tag)) {
-                audioSource.PlayOneShot(clipChange);
+                GameSounds.PlayerSound(GameSounds.Sound.PlayerChange);
                 moveToPoint.position = moveTo;
                 return false;
             }
@@ -112,7 +99,7 @@ public class PlayerController : MonoBehaviour {
             moveToPoint.position = moveTo;
             return true;
         } else {
-            audioSource.PlayOneShot(clipMovement);
+            GameSounds.PlayerSound(GameSounds.Sound.PlayerMovement);
         }       
         return false;
     }

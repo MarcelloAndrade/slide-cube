@@ -34,8 +34,7 @@ public class CheckPoint : MonoBehaviour {
             collision.CompareTag("Green") ||
             collision.CompareTag("Orange") ||
             collision.CompareTag("Pink")) {
-            gameManager.CompleteLevel();            
-            return;
+            gameManager.CompleteLevel();                        
         }
     }
 }

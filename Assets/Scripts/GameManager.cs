@@ -5,14 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
-    public float restartDelay = 1f;
-
     public GameObject completeLevelUI;
     public GameObject gameOverUI;
 
     public GameObject settingsUI;
     public GameObject audioOn;
     public GameObject audioOff;
+
+    public int timeToCompleteLevel;
+
 
     void Start() {
         completeLevelUI.SetActive(false);
@@ -29,12 +30,12 @@ public class GameManager : MonoBehaviour {
 
     public void CompleteLevel() {
         completeLevelUI.SetActive(true);
-        //audioSource.PlayOneShot(clipSuccess);
+        GameSounds.PlayerSound(GameSounds.Sound.LvLWin);        
     }
 
     public void EndGame() {
         gameOverUI.SetActive(true);
-        //audioSource.PlayOneShot(clipGameOver);
+        GameSounds.PlayerSound(GameSounds.Sound.LvLFail);
     }
 
     public void Restart() {
@@ -53,12 +54,18 @@ public class GameManager : MonoBehaviour {
     }
 
     public void SetVolume() {
-        if (!audioOn.activeInHierarchy) {
-            audioOn.SetActive(true);
-            audioOff.SetActive(false);
-        } else {
+        if (audioOn.activeInHierarchy) {
             audioOn.SetActive(false);
             audioOff.SetActive(true);
+            GameSounds.SetVolume(0);
+        } else {
+            audioOn.SetActive(true);
+            audioOff.SetActive(false);
+            GameSounds.SetVolume(1);
         }
     }
+
+    public int GetTimeToCompleteLevel () { 
+        return timeToCompleteLevel;
+    }     
 }

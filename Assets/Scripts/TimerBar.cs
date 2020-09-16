@@ -7,7 +7,6 @@ public class TimerBar : MonoBehaviour {
 
     public GameManager gameManager;
 
-    public int timeToComplete;
     public Gradient gradient;
     public Image fill;
 
@@ -15,8 +14,8 @@ public class TimerBar : MonoBehaviour {
     
     void Start() {
         slider = gameObject.GetComponent<Slider>();
-        slider.maxValue = timeToComplete;
-        slider.value = timeToComplete;
+        slider.maxValue = gameManager.GetTimeToCompleteLevel();
+        slider.value = gameManager.GetTimeToCompleteLevel();
 
         fill.color = gradient.Evaluate(1f);
     }

@@ -3,6 +3,8 @@ using UnityEngine.Animations;
 
 public class PlayerController : MonoBehaviour {
 
+    public GameManager gameManager;
+
     public float speed = 5f;
     public Transform moveToPoint;
     public LayerMask mapLimitLayer;
@@ -53,7 +55,8 @@ public class PlayerController : MonoBehaviour {
                 moveX = -1f;
             }
 
-            if (direction != Axis.None) {                
+            if (direction != Axis.None) {
+                gameManager.activeTouchlUI = false;
                 while (GetNextPositionToMove(direction, moveY, moveX)) {
                 }
             }

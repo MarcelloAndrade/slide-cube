@@ -8,22 +8,26 @@ public static class GameSounds {
         PlayerMovement,
         PlayerBlock,
         PlayerChange,
-        LvLWin,
-        LvLFail
+        LvLWin
     }
 
     private static GameObject soundGameObject;
     private static AudioSource audioSource;
-    
-    public static void PlayerSound(Sound sound) {
-        if(soundGameObject == null) {
+
+    private static void Instance() {
+        if (soundGameObject == null) {
             soundGameObject = new GameObject("Sound");
             audioSource = soundGameObject.AddComponent<AudioSource>();
         }
+    }
+    
+    public static void PlayerSound(Sound sound) {
+        Instance();
         audioSource.PlayOneShot(GetAudioClip(sound));
     }
 
     public static void SetVolume(float volume) {
+        Instance();
         audioSource.volume = volume;
     }
     

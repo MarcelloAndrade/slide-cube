@@ -10,8 +10,13 @@ public class TimerScore : MonoBehaviour {
     public Text timerMinutes;
     public Text timerSeconds;
     public Text timerMilliseconds;
-    private float timer;
+
+    public float timer;
     private float startTime;
+
+    private int minutes;
+    private int seconds;
+    private int milliseconds;
 
     void Start() {
         startTime = Time.time;
@@ -21,19 +26,18 @@ public class TimerScore : MonoBehaviour {
     }
 
     void Update() {
-        if (gameManager.gameIsRunning) {
+        if (!gameManager.activeTouchlUI) {
             timer = Time.time - startTime;
-            int minutes = (int)timer / 60;
-            int seconds = (int)timer % 60;
-            int milliseconds = (int)(Math.Floor((timer - (seconds + minutes * 60)) * 100));
+            minutes = (int)timer / 60;
+            seconds = (int)timer % 60;
+            milliseconds = (int)(Math.Floor((timer - (seconds + minutes * 60)) * 100));
 
-            timerMinutes.text = minutes < 10 ? "0" + minutes.ToString() : minutes.ToString();
-            timerSeconds.text = seconds < 10 ? "0" + seconds.ToString() : seconds.ToString();
-            timerMilliseconds.text = milliseconds < 1 ? "0" + milliseconds.ToString() : milliseconds.ToString();
+            timerMinutes.text = GameUtil.ZeroOnLeft(minutes);
+            timerSeconds.text = GameUtil.ZeroOnLeft(seconds);
+            timerMilliseconds.text = milliseconds.ToString();
 
-            gameManager.scoreLevelMinutes = timerMinutes.text;
-            gameManager.scoreLevelSeconds = timerSeconds.text;
-            gameManager.scoreLevelMilliseconds = timerMilliseconds.text;
+            gameManager.scoreLvL = timer;
         }
     }
+
 }

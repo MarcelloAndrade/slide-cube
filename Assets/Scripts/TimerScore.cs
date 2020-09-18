@@ -4,17 +4,22 @@ using UnityEngine.UI;
 
 public class TimerScore : MonoBehaviour {
 
-    public GameManager gameManager;
     public Text timerMinutes;
     public Text timerSeconds;
     public Text timerMilliseconds;
 
-    public float timer;
+    private GameManager gameManager;
+
+    private float timer;
     private float startTime;
 
     private int minutes;
     private int seconds;
     private int milliseconds;
+
+    void Awake() {
+        gameManager = GameObject.FindObjectOfType<GameManager>();
+    }
 
     void Start() {
         timerMinutes.text = "00";

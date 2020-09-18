@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public static class GameSounds {
-
     public enum Sound {
         PlayerMovement,
         PlayerBlock,

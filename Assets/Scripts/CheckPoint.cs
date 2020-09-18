@@ -2,9 +2,12 @@
 
 public class CheckPoint : MonoBehaviour {
 
-    public GameManager gameManager;
-
+    private  GameManager gameManager;
     private Animator anim;
+
+    void Awake() {
+        gameManager = GameObject.FindObjectOfType<GameManager>();
+    }
 
     void Start() {
         anim = gameObject.GetComponent<Animator>();

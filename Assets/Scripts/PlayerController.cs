@@ -3,8 +3,6 @@ using UnityEngine.Animations;
 
 public class PlayerController : MonoBehaviour {
 
-    public GameManager gameManager;
-
     public float speed = 5f;
     public Transform moveToPoint;
     public LayerMask mapLimitLayer;
@@ -16,17 +14,24 @@ public class PlayerController : MonoBehaviour {
     public Sprite spritePink;
     public Sprite spriteOrange;
 
+    private GameManager gameManager;
     private Animator anim;
     private SpriteRenderer playerSpriteRenderer;
-    
+
+    // Mobile Touch
+    private float fingerStartTime = 0.0f;
+    private Vector2 fingerStartPos = Vector2.zero;
+    private bool isSwipe = false;
+    private float minSwipeDist = 50.0f;
+    private float maxSwipeTime = 1.5f;
+
     private Player player;
 
     private void Awake() {
+        gameManager = GameObject.FindObjectOfType<GameManager>();
         anim = GetComponent<Animator>();
         playerSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();        
-
         SetPlayerAttributes(gameObject.tag);
-
         player = new Player();        
     }
 
@@ -36,30 +41,102 @@ public class PlayerController : MonoBehaviour {
 
     private void Update() {
         transform.position = Vector3.MoveTowards(transform.position, moveToPoint.position, speed * Time.deltaTime);
-
         if (!gameManager.pauseGame && Vector3.Distance(transform.position, moveToPoint.position) < 0.3) {
             Axis direction = Axis.None;
             float moveY = 0f;
             float moveX = 0f;
-            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
-                direction = Axis.Y;
-                moveY = +1f;
-            } else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) {
-                direction = Axis.Y;
-                moveY = -1f;
-            } else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) {
-                direction = Axis.X;
-                moveX = +1f;
-            } else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
-                direction = Axis.X;
-                moveX = -1f;
-            }
 
+#if UNITY_STANDALONE || UNITY_WEBPLAYE
+            InputPC(direction, moveY, moveX);
+#elif UNITY_IOS || UNITY_ANDROID
+            InputMobile(direction, moveY, moveX);
+#endif
             if (direction != Axis.None) {
                 gameManager.activeTouchlUI = false;
                 while (GetNextPositionToMove(direction, moveY, moveX)) {
                 }
             }
+        }
+    }
+    private void InputMobile(Axis direction, float moveY, float moveX) {
+        if (Input.touchCount > 0) {
+
+            foreach (Touch touch in Input.touches) {
+                switch (touch.phase) {
+                    case TouchPhase.Began:
+                        /* this is a new touch */
+                        isSwipe = true;
+                        fingerStartTime = Time.time;
+                        fingerStartPos = touch.position;
+                        break;
+
+                    case TouchPhase.Canceled:
+                        /* The touch is being canceled */
+                        isSwipe = false;
+                        break;
+
+                    case TouchPhase.Ended:
+
+                        float gestureTime = Time.time - fingerStartTime;
+                        float gestureDist = (touch.position - fingerStartPos).magnitude;
+
+                        if (isSwipe && gestureTime < maxSwipeTime && gestureDist > minSwipeDist) {
+                            Vector2 directionTouch = touch.position - fingerStartPos;
+                            Vector2 swipeType = Vector2.zero;
+
+                            if (Mathf.Abs(directionTouch.x) > Mathf.Abs(directionTouch.y)) {
+                                // the swipe is horizontal:
+                                swipeType = Vector2.right * Mathf.Sign(directionTouch.x);
+                            } else {
+                                // the swipe is vertical:
+                                swipeType = Vector2.up * Mathf.Sign(directionTouch.y);
+                            }
+
+                            if (swipeType.x != 0.0f) {
+                                if (swipeType.x > 0.0f) {
+                                    // MOVE RIGHT
+                                    direction = Axis.X;
+                                    moveX = +1f;
+                                } else {
+                                    // MOVE LEFT
+                                    direction = Axis.X;
+                                    moveX = -1f;
+                                }
+                            }
+
+                            if (swipeType.y != 0.0f) {
+                                if (swipeType.y > 0.0f) {
+                                    // MOVE UP
+                                    direction = Axis.Y;
+                                    moveY = +1f;
+                                } else {
+                                    // MOVE DOWN
+                                    direction = Axis.Y;
+                                    moveY = -1f;
+                                }
+                            }
+
+                        }
+
+                        break;
+                }
+            }
+        }
+    }
+
+    private void InputPC(Axis direction, float moveY, float moveX) {
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
+            direction = Axis.Y;
+            moveY = +1f;
+        } else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) {
+            direction = Axis.Y;
+            moveY = -1f;
+        } else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) {
+            direction = Axis.X;
+            moveX = +1f;
+        } else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
+            direction = Axis.X;
+            moveX = -1f;
         }
     }
 

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -14,15 +12,17 @@ public class GameManager : MonoBehaviour {
     public GameObject startTouchlUI;
     public Text scoreLvlUI;
     public Text highScoreLvlUI;
-    public bool activeTouchlUI = true;
-    public bool lvlComplete = false;
-    public float scoreLvL;    
-    
+    public Animator animBestScore;
+
+    public bool lvlComplete { get; set; }  = false;
+    public float scoreLvL { get; set; }
+    public bool activeTouchlUI { get; set; } = true;
+    public bool pauseGame { get; set; } = false;
+
     void Start() {
+        SetVolume();
         completeLevelUI.SetActive(false);
         settingsUI.SetActive(false);
-        audioOn.SetActive(true);
-        audioOff.SetActive(false);
         startTouchlUI.SetActive(true);
     }
 
@@ -33,19 +33,20 @@ public class GameManager : MonoBehaviour {
     }
 
     public void CompleteLevel() {
-        Time.timeScale = 0f;
         lvlComplete = true;
-        SetScoreValue();
-        completeLevelUI.SetActive(true);
         GameSounds.PlayerSound(GameSounds.Sound.LvLWin);        
+        completeLevelUI.SetActive(true);
+        SetScoreValue();
     }
 
     private void SetScoreValue() {
-        if (scoreLvL < PlayerPrefs.GetFloat(SceneManager.GetActiveScene().name +"HighScore", 9999)) {
-            PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + "HighScore", scoreLvL);
-            highScoreLvlUI.text = GameUtil.ConvertScore(scoreLvL);             
+        String scoreName = SceneManager.GetActiveScene().name + "HighScore";
+        if (scoreLvL < PlayerPrefs.GetFloat(scoreName, float.MaxValue)) {
+            PlayerPrefs.SetFloat(scoreName, scoreLvL);
+            highScoreLvlUI.text = GameUtil.ConvertScore(scoreLvL);
+            animBestScore.SetTrigger("best-score-alert");
         } else {
-            float loadHighScore = PlayerPrefs.GetFloat(SceneManager.GetActiveScene().name + "HighScore");
+            float loadHighScore = PlayerPrefs.GetFloat(scoreName);
             highScoreLvlUI.text = GameUtil.ConvertScore(loadHighScore);
         }
 
@@ -61,9 +62,11 @@ public class GameManager : MonoBehaviour {
         if (isVisible) {
             settingsUI.SetActive(true);
             Time.timeScale = 0f;
+            pauseGame = true;
         } else {
             settingsUI.SetActive(false);
             Time.timeScale = 1f;
+            pauseGame = false;
         }
     }
 

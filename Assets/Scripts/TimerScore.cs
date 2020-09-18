@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,14 +17,18 @@ public class TimerScore : MonoBehaviour {
     private int milliseconds;
 
     void Start() {
-        startTime = Time.time;
         timerMinutes.text = "00";
         timerSeconds.text = "00";
         timerMilliseconds.text = "00";
     }
 
     void Update() {
-        if (!gameManager.activeTouchlUI) {
+        if (!gameManager.activeTouchlUI && !gameManager.lvlComplete) {
+            
+            if (startTime == 0) {
+                startTime = Time.time;
+            }
+
             timer = Time.time - startTime;
             minutes = (int)timer / 60;
             seconds = (int)timer % 60;

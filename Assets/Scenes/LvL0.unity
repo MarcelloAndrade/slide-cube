@@ -4035,6 +4035,7 @@ MonoBehaviour:
   startTouchlUI: {fileID: 1987373198}
   scoreLvlUI: {fileID: 1951266355}
   highScoreLvlUI: {fileID: 1207907835}
+  animBestScore: {fileID: 1207907837}
 --- !u!4 &999249357
 Transform:
   m_ObjectHideFlags: 0
@@ -4351,6 +4352,7 @@ GameObject:
   - component: {fileID: 1207907834}
   - component: {fileID: 1207907836}
   - component: {fileID: 1207907835}
+  - component: {fileID: 1207907837}
   m_Layer: 5
   m_Name: BestTime
   m_TagString: Untagged
@@ -4418,6 +4420,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1207907833}
   m_CullTransparentMesh: 0
+--- !u!95 &1207907837
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207907833}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: eb7e5ba1e07d9d842bb5325b40ebced6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1277462459
 GameObject:
   m_ObjectHideFlags: 0
@@ -6153,7 +6174,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.086}
   m_AnchorMax: {x: 0.9681177, y: 0.3026445}
-  m_AnchoredPosition: {x: 13.5, y: -1.2599792}
+  m_AnchoredPosition: {x: 13.5, y: -1.2600098}
   m_SizeDelta: {x: 27, y: -5.7269897}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1643692585
@@ -6172,6 +6193,7 @@ MonoBehaviour:
   timerMinutes: {fileID: 1524679959}
   timerSeconds: {fileID: 2000021120}
   timerMilliseconds: {fileID: 1160052851}
+  timer: 0
 --- !u!114 &1643692586
 MonoBehaviour:
   m_ObjectHideFlags: 0

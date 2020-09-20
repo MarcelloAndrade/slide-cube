@@ -20,20 +20,22 @@ public class GameManager : MonoBehaviour {
     public bool pauseGame { get; set; } = false;
 
     void Start() {
-        SetVolume();
+        GetVolume();
         completeLevelUI.SetActive(false);
         settingsUI.SetActive(false);
-        startTouchlUI.SetActive(true);
+        startTouchlUI.SetActive(true);        
     }
 
     private void Update() {
         if (!activeTouchlUI) {
-            startTouchlUI.SetActive(false);            
+            startTouchlUI.SetActive(false);
+            pauseGame = false;
         }
     }
 
     public void CompleteLevel() {
         lvlComplete = true;
+        pauseGame = true;
         GameSounds.PlayerSound(GameSounds.Sound.LvLWin);        
         completeLevelUI.SetActive(true);
         SetScoreValue();
@@ -53,12 +55,13 @@ public class GameManager : MonoBehaviour {
         scoreLvlUI.text = GameUtil.ConvertScore(scoreLvL);
     }
 
-    public void Restart() {
+    public void Restart() {        
         OpenOrClouseUISettings(false);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);        
     }
 
     public void OpenOrClouseUISettings(bool isVisible) {
+        GameSounds.PlayerSound(GameSounds.Sound.Button);
         if (isVisible) {
             settingsUI.SetActive(true);
             Time.timeScale = 0f;
@@ -71,15 +74,30 @@ public class GameManager : MonoBehaviour {
     }
 
     public void SetVolume() {
-        if (audioOn.activeInHierarchy) {
-            audioOn.SetActive(false);
-            audioOff.SetActive(true);
-            GameSounds.SetVolume(0);
-        } else {
+        GameSounds.PlayerSound(GameSounds.Sound.Button);
+        if (PlayerPrefs.GetInt("Volume", 1) != 1) {
             audioOn.SetActive(true);
             audioOff.SetActive(false);
             GameSounds.SetVolume(1);
+            PlayerPrefs.SetInt("Volume", 1);
+        } else {
+            audioOn.SetActive(false);
+            audioOff.SetActive(true);            
+            GameSounds.SetVolume(0);
+            PlayerPrefs.SetInt("Volume", 0);
         }
     }
 
+
+    public void GetVolume() {
+        if (PlayerPrefs.GetInt("Volume", 1) == 1) {
+            audioOn.SetActive(true);
+            audioOff.SetActive(false);
+            GameSounds.SetVolume(1);            
+        } else {
+            audioOn.SetActive(false);
+            audioOff.SetActive(true);
+            GameSounds.SetVolume(0);            
+        }
+    }
 }

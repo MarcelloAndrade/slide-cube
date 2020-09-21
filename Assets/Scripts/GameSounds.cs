@@ -7,8 +7,7 @@ public static class GameSounds {
         PlayerMovement,
         PlayerBlock,
         PlayerChange,
-        LvLWin,
-        Button
+        LvLWin
     }
 
     private static GameObject soundGameObject;

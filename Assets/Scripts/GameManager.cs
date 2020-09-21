@@ -61,7 +61,6 @@ public class GameManager : MonoBehaviour {
     }
 
     public void OpenOrClouseUISettings(bool isVisible) {
-        GameSounds.PlayerSound(GameSounds.Sound.Button);
         if (isVisible) {
             settingsUI.SetActive(true);
             Time.timeScale = 0f;
@@ -74,7 +73,6 @@ public class GameManager : MonoBehaviour {
     }
 
     public void SetVolume() {
-        GameSounds.PlayerSound(GameSounds.Sound.Button);
         if (PlayerPrefs.GetInt("Volume", 1) != 1) {
             audioOn.SetActive(true);
             audioOff.SetActive(false);
@@ -99,5 +97,16 @@ public class GameManager : MonoBehaviour {
             audioOff.SetActive(true);
             GameSounds.SetVolume(0);            
         }
+    }
+
+    public void NextLevel() {
+        if (PlayerPrefs.GetInt("LevelSelect") >= PlayerPrefs.GetInt("LastLevelComplete")) {
+            PlayerPrefs.SetInt("LastLevelComplete", PlayerPrefs.GetInt("LastLevelComplete") + 1);
+        }
+        SceneManager.LoadScene("LvLManager");
+    }
+
+    public void LvLManager() {        
+        SceneManager.LoadScene("LvLManager");
     }
 }

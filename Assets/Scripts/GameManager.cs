@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -68,8 +69,13 @@ public class GameManager : MonoBehaviour {
         } else {
             settingsUI.SetActive(false);
             Time.timeScale = 1f;
-            pauseGame = false;
+            StartCoroutine(RemovePause());
+            
         }
+    }
+    IEnumerator RemovePause() {        
+        yield return new WaitForSeconds(0.5f);
+        pauseGame = false;        
     }
 
     public void SetVolume() {
@@ -100,13 +106,15 @@ public class GameManager : MonoBehaviour {
     }
 
     public void NextLevel() {
+        Time.timeScale = 1f;
         if (PlayerPrefs.GetInt("LevelSelect") >= PlayerPrefs.GetInt("LastLevelComplete")) {
             PlayerPrefs.SetInt("LastLevelComplete", PlayerPrefs.GetInt("LastLevelComplete") + 1);
         }
         SceneManager.LoadScene("LvLManager");
     }
 
-    public void LvLManager() {        
+    public void LvLManager() {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("LvLManager");
     }
 }

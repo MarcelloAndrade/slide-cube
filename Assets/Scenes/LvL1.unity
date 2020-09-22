@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2647,7 +2647,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 1f4b6e8f32266404e99e3a26ca54df61, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2701,6 +2701,7 @@ MonoBehaviour:
   spriteGreen: {fileID: 21300000, guid: a0b0ece45b4795648a6710ea8dad5397, type: 3}
   spritePink: {fileID: 21300000, guid: 4bcabb13215c5f14cad6a69fc528ea96, type: 3}
   spriteOrange: {fileID: 21300000, guid: 8d7c194c8a7d1e246b2d729711581962, type: 3}
+  gameManager: {fileID: 999249356}
 --- !u!50 &615248494
 Rigidbody2D:
   serializedVersion: 4
@@ -7809,7 +7810,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 999249356}
-        m_MethodName: SetVolume
+        m_MethodName: NextLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour {
     public Sprite spritePink;
     public Sprite spriteOrange;
 
-    private GameManager gameManager;
+    public GameManager gameManager;
     private Animator anim;
     private SpriteRenderer playerSpriteRenderer;
 
@@ -35,12 +35,12 @@ public class PlayerController : MonoBehaviour {
         player = new Player();        
     }
 
-    private void Start() {
+    private void Start() {        
         moveToPoint.parent = null;
     }
 
     private void Update() {
-        if(!gameManager.pauseGame) {        
+        if(!gameManager.pauseGame && !gameManager.lvlComplete) {        
             transform.position = Vector3.MoveTowards(transform.position, moveToPoint.position, speed * Time.deltaTime);
             if (Vector3.Distance(transform.position, moveToPoint.position) < 0.3) {
                 Axis direction = Axis.None;

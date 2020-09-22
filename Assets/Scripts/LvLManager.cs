@@ -19,7 +19,7 @@ public class LvLManager : MonoBehaviour {
             levelButtons[i].onClick.AddListener(() => this.LoadScene(curret));
             if (i+1 <= lastLevelComplete) {
                 transform.GetChild(i).GetComponent<Button>().image.sprite = spriteUnlock;
-                levelButtons[i].GetComponentInChildren<Text>().text = (curret).ToString();
+                levelButtons[i].GetComponentInChildren<Text>().text = (i + 1).ToString();
                 levelButtons[i].interactable = true;
             } else {
                 transform.GetChild(i).GetComponent<Button>().image.sprite = spriteLock;
@@ -30,7 +30,7 @@ public class LvLManager : MonoBehaviour {
     }
 
     public void LoadScene(int level) {
-        PlayerPrefs.SetInt("LevelSelect", level);
+        PlayerPrefs.SetInt("LevelSelect", level);        
         SceneManager.LoadScene("LvL" + level.ToString());        
     }
 }

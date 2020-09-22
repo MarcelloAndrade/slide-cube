@@ -11,6 +11,7 @@ public class LvLManager : MonoBehaviour {
 
     private Button[] levelButtons;
     private void Awake() {
+        //PlayerPrefs.DeleteAll();
         int lastLevelComplete = PlayerPrefs.GetInt("LastLevelComplete", 1);
         levelButtons = new Button[transform.childCount];
         for(int i = 0; i < levelButtons.Length; i++) {

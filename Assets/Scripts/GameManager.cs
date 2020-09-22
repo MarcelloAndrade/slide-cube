@@ -108,7 +108,7 @@ public class GameManager : MonoBehaviour {
     public void NextLevel() {
         Time.timeScale = 1f;
         if (PlayerPrefs.GetInt("LevelSelect") >= PlayerPrefs.GetInt("LastLevelComplete")) {
-            PlayerPrefs.SetInt("LastLevelComplete", PlayerPrefs.GetInt("LastLevelComplete") + 1);
+            PlayerPrefs.SetInt("LastLevelComplete", PlayerPrefs.GetInt("LastLevelComplete", 1) + 1);
         }
         SceneManager.LoadScene("LvLManager");
     }

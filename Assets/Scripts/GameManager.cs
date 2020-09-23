@@ -40,6 +40,9 @@ public class GameManager : MonoBehaviour {
         GameSounds.PlayerSound(GameSounds.Sound.LvLWin);        
         completeLevelUI.SetActive(true);
         SetScoreValue();
+        if (PlayerPrefs.GetInt("LevelSelect") >= PlayerPrefs.GetInt("LastLevelComplete")) {
+            PlayerPrefs.SetInt("LastLevelComplete", PlayerPrefs.GetInt("LastLevelComplete", 1) + 1);
+        }        
     }
 
     private void SetScoreValue() {
@@ -107,9 +110,9 @@ public class GameManager : MonoBehaviour {
 
     public void NextLevel() {
         Time.timeScale = 1f;
-        if (PlayerPrefs.GetInt("LevelSelect") >= PlayerPrefs.GetInt("LastLevelComplete")) {
-            PlayerPrefs.SetInt("LastLevelComplete", PlayerPrefs.GetInt("LastLevelComplete", 1) + 1);
-        }
+        /**
+         * 
+         */
         SceneManager.LoadScene("LvLManager");
     }
 

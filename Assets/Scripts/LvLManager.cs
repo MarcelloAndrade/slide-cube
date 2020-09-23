@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class LvLManager : MonoBehaviour {
 
     public Sprite spriteUnlock;
-    public Sprite spriteLock;
+    public Sprite spriteLock;    
 
     private Button[] levelButtons;
     private void Awake() {
@@ -25,7 +25,7 @@ public class LvLManager : MonoBehaviour {
             } else {
                 transform.GetChild(i).GetComponent<Button>().image.sprite = spriteLock;
                 levelButtons[i].GetComponentInChildren<Text>().enabled = false;
-                levelButtons[i].interactable = false;
+                levelButtons[i].interactable = false;                
             }
         }
     }

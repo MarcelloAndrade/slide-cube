@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -8812,10 +8812,10 @@ RectTransform:
   m_Father: {fileID: 511773311}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0.5, y: 4}
-  m_SizeDelta: {x: -349, y: -128.26678}
+  m_AnchoredPosition: {x: 0, y: -51}
+  m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1292474137
 MonoBehaviour:
@@ -8836,7 +8836,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: SLIDE CUBE
+  m_text: CUBE COLORS
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 580b56a0a8760d4499909cc4aaeff44d, type: 2}
   m_sharedMaterial: {fileID: -7071805376457696287, guid: 580b56a0a8760d4499909cc4aaeff44d,
@@ -8855,7 +8855,7 @@ MonoBehaviour:
     topRight: {r: 0.31764707, g: 0.31764707, b: 0.31764707, a: 1}
     bottomLeft: {r: 0.31764707, g: 0.31764707, b: 0.31764707, a: 1}
     bottomRight: {r: 0.31764707, g: 0.31764707, b: 0.31764707, a: 1}
-  m_fontColorGradientPreset: {fileID: 11400000, guid: 0ebe00c3fa646f540b408068283a35a2,
+  m_fontColorGradientPreset: {fileID: 11400000, guid: af472c45cd475304dbf5a9acf02cb79e,
     type: 2}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
